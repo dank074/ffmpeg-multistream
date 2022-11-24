@@ -11,10 +11,17 @@
   "directories": {
     "test": "test"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {	
     "type": "git",
-    "url": "https://github.com/dank074/fluent-ffmpeg-multistream-ts.git"
+    "url": "git+https://github.com/dank074/fluent-ffmpeg-multistream-ts.git"
   },
+  "bugs": {
+    "url": "https://github.com/dank074/fluent-ffmpeg-multistream-ts/issues"
+  },
+  "homepage": "https://github.com/dank074/fluent-ffmpeg-multistream-ts#readme",
   "scripts": {
     "build": "tsc",
     "test": "tape test/*.js",
