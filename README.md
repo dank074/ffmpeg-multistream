@@ -11,7 +11,7 @@ npm install @dank074/fluent-ffmpeg-multistream-ts
 
 ```javascript
 const ffmpeg = require('fluent-ffmpeg')
-const { StreamInput, StreamOutput } = require('fluent-ffmpeg-multistream')
+const { StreamInput, StreamOutput } = require('@dank074/fluent-ffmpeg-multistream-ts')
 
 ffmpeg()
   .input(StreamInput(readableStream1).url)
