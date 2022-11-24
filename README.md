@@ -1,8 +1,13 @@
 # fluent-ffmpeg-multistream
 
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+This is a fork of https://github.com/t-mullen/fluent-ffmpeg-multistream
 
-Uses Unix domain sockets to add support for multiple stream inputs/outputs to [fluent-ffmpeg](https://github.com/fluent-ffmpeg/node-fluent-ffmpeg).
+## Installation
+```
+npm install @dank074/fluent-ffmpeg-multistream-ts
+```
+
+## Usage
 
 ```javascript
 const ffmpeg = require('fluent-ffmpeg')
