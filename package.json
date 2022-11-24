@@ -1,23 +1,31 @@
 {
-  "name": "fluent-ffmpeg-multistream",
+  "name": "@dank074/fluent-ffmpeg-multistream-ts",
   "version": "1.0.0",
-  "description": "Adds support for multiple stream inputs/outputs to fluent-ffmpeg.",
-  "main": "src/index.js",
+  "description": "Adds support for multiple stream inputs/outputs to fluent-ffmpeg. Fork from https://github.com/t-mullen/fluent-ffmpeg-multistream.git",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "directories": {
     "test": "test"
   },
   "repository": {	
     "type": "git",
-    "url": "https://github.com/t-mullen/fluent-ffmpeg-multistream.git"
+    "url": "https://github.com/dank074/fluent-ffmpeg-multistream-ts.git"
   },
   "scripts": {
-    "test": "standard --fix src/** && tape test/*.js"
+    "build": "tsc",
+    "test": "tape test/*.js",
+    "prepublish": "npm run build"
   },
   "author": "Thomas Mullen",
   "license": "MIT",
   "devDependencies": {
     "fluent-ffmpeg": "^2.1.2",
     "standard": "^8.6.0",
-    "tape": "^4.6.3"
+    "tape": "^4.6.3",
+    "typescript": "^4.8.4"
   }
 }

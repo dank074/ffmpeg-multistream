@@ -25,7 +25,7 @@ test('two outputs', function (t) {
     .addOutputOption('-f mpegts')
     .addOutput(StreamOutput(ws2).url)
     .addOutputOption('-f mpegts')
-    .on('error', (err) => {})
+    .on('error', (err) => { t.fail('ffmpeg failed: ' + err)})
 
   command.run()
 })
@@ -56,7 +56,7 @@ test('two inputs, two outputs', function (t) {
     .output(StreamOutput(ws2).url)
     .addOutputOption('-f mpegts')
     .on('error', (err) => {
-      console.log(err);
+      t.fail('ffmpeg failed: ' + err);
     })
 
   command.run()
