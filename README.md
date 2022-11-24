@@ -1,4 +1,4 @@
-# fluent-ffmpeg-multistream
+# fluent-ffmpeg-multistream-ts
 
 This is a fork of https://github.com/t-mullen/fluent-ffmpeg-multistream
 
