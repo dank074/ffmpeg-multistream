@@ -26,7 +26,7 @@ class UnixStream {
       fs.unlinkSync(this.socketPath)
     } catch (err) {}
     const server = net.createServer(onSocket)
-    stream.on('finish', () => {
+    stream.on('close', () => {
       server.close()
     })
     server.listen(this.socketPath)
