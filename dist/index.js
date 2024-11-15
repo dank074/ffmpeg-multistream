@@ -26,7 +26,7 @@ class UnixStream {
         }
         catch (err) { }
         const server = net_1.default.createServer(onSocket);
-        stream.on('finish', () => {
+        stream.on('close', () => {
             server.close();
         });
         server.listen(this.socketPath);
