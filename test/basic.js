@@ -3,6 +3,7 @@ const ffmpeg = require('fluent-ffmpeg')
 const { StreamInput, StreamOutput } = require('./../')
 const { Writable, Readable, PassThrough } = require('stream')
 const fs = require('fs')
+const { createConnection } = require("node:net")
 
 test('two outputs', function (t) {
   t.plan(2)
@@ -91,6 +92,53 @@ test('one Audio input, copy Audio codec, verify output matches input', function 
     .output(outputStream);
 
     command.run();
+})
+
+test('Test loss of data in StreamInput', function (t) {
+  t.plan(1)
+
+  const stream = fs.createReadStream('./test/sample2.wav')
+  const originalFile = fs.readFileSync('./test/sample2.wav')
+  const chunks = []
+
+  const socket = StreamInput(stream)
+  const client = createConnection(socket.socketPath);
+
+  client.on("data", (data) => chunks.push(data))
+  client.on("error", () => {t.fail(`Error connecting to socket: ${socket.socketPath}`)})
+  client.on("end", () => {
+      const buffer = Buffer.concat(chunks)
+      const difference = buffer.length - originalFile.length;
+      if(difference === 0) t.pass(`input and output match: ${buffer.length} bytes`)
+      else t.fail(`Input and output does not match: ${difference} bytes difference`)
+  })
+})
+
+test('Test loss of data in StreamOutput', function(t) {
+  t.plan(1)
+
+  const originalFile = fs.readFileSync('./test/sample2.wav')
+  const chunks = []
+  const output = new PassThrough()
+
+  output.on('data', (data) => chunks.push(data))
+
+  
+  output.on("end", () => {
+    const buffer = Buffer.concat(chunks)
+    const difference = buffer.length - originalFile.length;
+    if(difference === 0) t.pass(`input and output match: ${buffer.length} bytes`)
+    else t.fail(`Input and output does not match: ${difference} bytes difference`)
+  })
+
+  const socket = StreamOutput(output)
+  const client = createConnection(socket.socketPath);
+
+  client.on("connect", () => {
+    client.write(originalFile)
+    client.end()
+  })
+  client.on("error", () => {t.fail(`Error connecting to socket: ${socket.socketPath}`)})
 })
 
 test('cleanup', function (t) {
