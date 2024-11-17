@@ -1,7 +1,7 @@
 const test = require('tape')
 const ffmpeg = require('fluent-ffmpeg')
 const { StreamInput, StreamOutput } = require('./../')
-const { Writable, Readable } = require('stream')
+const { Writable, Readable, PassThrough } = require('stream')
 const fs = require('fs')
 
 test('two outputs', function (t) {
@@ -60,6 +60,37 @@ test('two inputs, two outputs', function (t) {
     })
 
   command.run()
+})
+
+test('one Audio input, copy Audio codec, verify output matches input', function (t) {
+  t.plan(1)
+
+  const rs1 = fs.createReadStream('./test/sample2.wav')
+  const originalFile = fs.readFileSync('./test/sample2.wav')
+  const chunks = []
+  const outputStream = new PassThrough()
+
+  outputStream.on('data', (data) => {
+    chunks.push(data)
+  })
+
+  const command = ffmpeg()
+    .addInput(StreamInput(rs1).url)
+    .on('start', console.log)
+    .on('error', (err) => {t.fail('ffmpeg failed: ' + err)})
+    .on('stderr', console.error)
+    .on('end', () => {
+      const buffer = Buffer.concat(chunks)
+
+      const difference = buffer.length - originalFile.length;
+      if(difference === 0) t.pass("input and output files match")
+      else t.fail(`Input and output do not match: ${difference} bytes difference`)
+    })
+    .audioCodec('copy')
+    .format('wav')
+    .output(outputStream);
+
+    command.run();
 })
 
 test('cleanup', function (t) {
