@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dank074/fluent-ffmpeg-multistream-ts.git"
+    "url": "git+https://github.com/dank074/ffmpeg-multistream.git"
   },
   "bugs": {
-    "url": "https://github.com/dank074/fluent-ffmpeg-multistream-ts/issues"
+    "url": "https://github.com/dank074/ffmpeg-multistream/issues"
   },
-  "homepage": "https://github.com/dank074/fluent-ffmpeg-multistream-ts#readme",
+  "homepage": "https://github.com/dank074/ffmpeg-multistream#readme",
   "scripts": {
     "build": "tsc",
     "test": "tape test/*.js",
