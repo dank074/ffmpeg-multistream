@@ -26,5 +26,16 @@ jobs:
       - name: Compile TypeScript
         run: npm run build
 
+      - name: Download custom FFmpeg build
+        run: |
+          curl -L https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/ffmpeg/7:7.1.1-1ubuntu1.1/ffmpeg_7.1.1.orig.tar.xz -o ffmpeg.tar.xz
+          tar -xf ffmpeg.tar.xz
+          mkdir -p ~/ffmpeg
+          cp ffmpeg_*/ffmpeg ~/ffmpeg/
+          echo "$HOME/ffmpeg" >> $GITHUB_PATH
+
+      - name: Verify FFmpeg version
+        run: ffmpeg -version
+
       - name: Run tests
         run: npm test
