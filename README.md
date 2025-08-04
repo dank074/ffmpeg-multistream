@@ -44,7 +44,7 @@ const ffmpeg = spawn('ffmpeg', [
   '-i', StreamInput(readableStream2).url,
   '-map', '0:a',
   '-c:a', 'copy',
-  '-f', 'wav'
+  '-f', 'wav',
   StreamOutput(writableStream1).url,
   '-map', '1:a',
   '-c:a', 'libopus',
